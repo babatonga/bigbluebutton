@@ -41,6 +41,7 @@ import SidebarNavigationContainer from '../sidebar-navigation/container';
 import SidebarContentContainer from '../sidebar-content/container';
 import { makeCall } from '/imports/ui/services/api';
 import ConnectionStatusService from '/imports/ui/components/connection-status/service';
+import DarkReader from 'darkreader';
 import Settings from '/imports/ui/services/settings';
 import LayoutService from '/imports/ui/components/layout/service';
 import { registerTitleView } from '/imports/utils/dom-utils';
@@ -118,6 +119,7 @@ const propTypes = {
   actionsbar: PropTypes.element,
   captions: PropTypes.element,
   locale: PropTypes.string,
+  darkTheme: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
@@ -253,6 +255,8 @@ class App extends Component {
       layoutContextDispatch,
       mountRandomUserModal,
     } = this.props;
+
+    this.renderDarkMode();
 
     if (meetingLayout !== prevProps.meetingLayout) {
       layoutContextDispatch({
@@ -407,6 +411,7 @@ class App extends Component {
 
     return (
       <Styled.ActionsBar
+        id="ActionsBar"
         role="region"
         aria-label={intl.formatMessage(intlMessages.actionsBarLabel)}
         aria-hidden={this.shouldAriaHide()}
@@ -449,6 +454,17 @@ class App extends Component {
         meetingId={User.meetingId}
       />
     ) : null);
+  }
+
+  renderDarkMode() {
+    const { darkTheme } = this.props;
+
+    return darkTheme
+      ? DarkReader.enable(
+        { brightness: 100, contrast: 90 },
+        { invert: [Styled.DtfInvert], ignoreInlineStyle: [Styled.DtfCss] },
+      )
+      : DarkReader.disable();
   }
 
   render() {

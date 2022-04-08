@@ -238,6 +238,7 @@ export default injectIntl(withModalMounter(withTracker(({ intl, baseControls }) 
     pushLayoutToEveryone: selectedLayout?.includes('Push'),
     audioAlertEnabled: AppSettings.chatAudioAlerts,
     pushAlertEnabled: AppSettings.chatPushAlerts,
+    darkTheme: AppSettings.darkTheme,
     shouldShowScreenshare,
     shouldShowPresentation: !shouldShowScreenshare && !shouldShowExternalVideo,
     shouldShowExternalVideo,
